@@ -1,0 +1,5 @@
+python ./scripts/extract_data.py --source_path ./data/eval_data/ --target_path ./data/eval_data/ --dataset 3d_match --model ./pretrained/fcgf/model_best.pth --voxel_size 0.025 --n_correspondences 5000 --extract_features --extract_correspondences --with_cuda
+
+python ./scripts/benchmark_pairwise_registration.py --source ./data/eval_data/ --dataset 3d_match --method RegBlock --model ./pretrained/RegBlock/model_best.pt --only_gt_overlap
+
+python3 ./scripts/pairwise_demo.py ./configs/pairwise_registration/demo/config.yaml --source_pc ./data/demo/pairwise/raw_data/cloud_bin_0.ply --target_pc ./data/demo/pairwise/raw_data/cloud_bin_1.ply --model pairwise_reg.pt --verbose --visualize

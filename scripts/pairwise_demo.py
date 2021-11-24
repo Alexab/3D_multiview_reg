@@ -79,7 +79,7 @@ def prepare_data(files, voxel_size, device='cuda'):
         sel0 = ME.utils.sparse_quantize(xyz0 / voxel_size, return_index=True)
 
         # Make point clouds using voxelized points
-        xyz0 = xyz0[sel0,:]
+        xyz0 = xyz0[sel0[1],:]
 
         # Get features
         npts0 = xyz0.shape[0]

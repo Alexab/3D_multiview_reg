@@ -84,18 +84,16 @@ class PairwiseReg(nn.Module):
 
             xyz_down = input_dict['pcd0'].to(self.device)
 
-            sinput0 = ME.SparseTensor(
-                input_dict['sinput0_F'], coords=input_dict['sinput0_C']).to(self.device)
+            sinput0 = ME.SparseTensor(input_dict['sinput0_F'], coordinates=input_dict['sinput0_C'], device=self.device)
 
             F0 = self.descriptor_module(sinput0).F
 
             test = torch.any(torch.isnan(F0))
             # If the FCGF descriptor should be trained with the FCGF loss (need also corresponding desc.)
             if self.train_descriptor:
-                sinput1 = ME.SparseTensor(
-                    input_dict['sinput1_F'], coords=input_dict['sinput1_C']).to(self.device)
+                sinput1 = ME.SparseTensor(input_dict['sinput1_F'], coordinates=input_dict['sinput1_C']) #.to(self.device)
 
-                F1 = self.descriptor_module(sinput1).F 
+                F1 = self.descriptor_module(sinput1.coordinates.to(self.device)).F
             else:
                 F1 = torch.empty(F0.shape[0], 0).to(self.device)
 
