@@ -128,7 +128,7 @@ def main(cfg, args, logger):
     logger.info('Total number of model parameters: {}'.format(nparameters))
 
     # Prepare the output file name
-    target_base = './data/demo/pairwise/results'
+    target_base = args.result
     id_0 = args.source_pc.split(os.sep)[-1].split('_')[-1].split('.')[0]
     id_1 = args.target_pc.split(os.sep)[-1].split('_')[-1].split('.')[0]
     metadata = np.array([[id_0, id_1, 'True']])
@@ -193,12 +193,13 @@ if __name__ == "__main__":
 
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('config', default='./configs/pairwise_registration/demo/config.yaml', type=str, help='config file')
-    parser.add_argument('--source_pc', default='./data/demo/pairwise/raw_data/cloud_bin_0.ply', type=str, help='source point cloud')
-    parser.add_argument('--target_pc', default='./data/demo/pairwise/raw_data/cloud_bin_1.ply', type=str, help='target point cloud')
+    parser.add_argument('config', default='', type=str, help='config file')
+    parser.add_argument('--source_pc', default='', type=str, help='source point cloud')
+    parser.add_argument('--target_pc', default='', type=str, help='target point cloud')
     parser.add_argument('--model', default='pairwise_reg.pt', type=str, help= 'Name of the pretrained model.')
     parser.add_argument('--verbose', action='store_true', help='Write out the intermediate results and timings')
     parser.add_argument('--visualize', action='store_true', help='Visualize the point cloud and the results.')
+    parser.add_argument('--result', default='', type=str, help='Full path to write out the intermediate results and timings')
 
     args = parser.parse_args()
     cfg = load_config(args.config)
